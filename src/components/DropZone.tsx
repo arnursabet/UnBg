@@ -128,7 +128,7 @@ export function DropZone({ onImageSelect }: DropZoneProps) {
               </div>
 
               <div className="flex gap-1.5">
-                {["PNG", "JPG", "WebP"].map((format) => (
+                {["PNG", "JPG", "WebP", "HEIC"].map((format) => (
                   <span
                     key={format}
                     className="px-2 py-0.5 rounded bg-[var(--color-surface)] border border-[var(--color-border)] text-xs text-zinc-500"

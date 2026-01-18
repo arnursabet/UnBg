@@ -30,7 +30,13 @@ export const config = {
   },
 
   upload: {
-    maxFileSizeMb: 5,
-    allowedTypes: ["image/png", "image/jpeg", "image/webp"],
+    maxFileSizeMb: 10,
+    allowedTypes: [
+      "image/png",
+      "image/jpeg",
+      "image/webp",
+      "image/heic",
+      "image/heif",
+    ],
   },
 } as const;

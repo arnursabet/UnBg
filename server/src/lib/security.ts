@@ -50,11 +50,18 @@ const MAGIC_NUMBERS: Record<string, number[][]> = {
   "image/webp": [[0x52, 0x49, 0x46, 0x46]], // RIFF header
 };
 
+const FTYP_MAGIC = [0x66, 0x74, 0x79, 0x70]; // "ftyp" at offset 4 for HEIC/HEIF
+
 export function validateFileMagic(
   buffer: ArrayBuffer,
   claimedType: string,
 ): boolean {
   const bytes = new Uint8Array(buffer.slice(0, 12));
+
+  if (claimedType === "image/heic" || claimedType === "image/heif") {
+    return FTYP_MAGIC.every((byte, i) => bytes[4 + i] === byte);
+  }
+
   const magics = MAGIC_NUMBERS[claimedType];
   if (!magics) return false;
   return magics.some((magic) => magic.every((byte, i) => bytes[i] === byte));

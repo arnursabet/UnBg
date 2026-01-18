@@ -8,6 +8,7 @@ import { ResultDisplay } from "./components/ResultDisplay";
 type AppState = "idle" | "preview" | "processing" | "result";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const MAX_FILE_SIZE_MB = 10;
 
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -39,6 +40,10 @@ function App() {
   }, [previewUrl]);
 
   const handleImageSelect = useCallback((file: File) => {
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      toast.error(`File too large. Maximum size is ${MAX_FILE_SIZE_MB}MB`);
+      return;
+    }
     setSelectedFile(file);
     setPreviewUrl(URL.createObjectURL(file));
     setState("preview");
